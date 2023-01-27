@@ -2,6 +2,7 @@ package com.gmail.danielarribas78w.myapplicationcompose
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
 import com.gmail.danielarribas78w.myapplicationcompose.ui.theme.MyApplicationComposeTheme
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -211,6 +213,8 @@ fun imagenRaza(raza: MutableState<String>){
 
 @Composable
 fun imageResourceDemo(raza:String) {
+    val context = LocalContext.current
+
 
     val imagenes: Map<String, Painter> = mapOf(
         Pair("HUMANO", painterResource(id = R.drawable.human)),
@@ -234,7 +238,11 @@ fun imageResourceDemo(raza:String) {
         )
         val context = LocalContext.current
         Button(onClick = {
-            context.startActivity(Intent(context, MainActivity2::class.java))
+            val intent = Intent(context , MainActivity2::class.java).apply {
+                putExtra(EXTRA_MESSAGE, raza)
+            }
+            context.startActivity(intent)
+
         }, modifier = Modifier.padding(10.dp)) {
             Text("Button")
         }
